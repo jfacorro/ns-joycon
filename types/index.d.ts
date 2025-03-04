@@ -12,7 +12,7 @@ declare class NsSwitchHID {
     private hid;
     private listeners;
     constructor(device: Device);
-    readonly meta: {
+    get meta(): {
         vendorId: number;
         productId: number;
         serialNumber: string | undefined;

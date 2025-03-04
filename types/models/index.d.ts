@@ -1,9 +1,8 @@
-/// <reference types="node" />
 interface IPacketBuffer {
     _raw: Buffer;
     _hex: String | String[];
 }
-export declare type BatteryLevel = 'full' | 'medium' | 'low' | 'critical' | 'empty' | 'charging';
+export type BatteryLevel = 'full' | 'medium' | 'low' | 'critical' | 'empty' | 'charging';
 interface IBatteryLevel extends IPacketBuffer {
     level: BatteryLevel;
 }
@@ -44,7 +43,7 @@ interface IStandardInputReport {
     analogStickRight: IAnalogStick;
     vibrator: IPacketBuffer;
 }
-export declare type Accelerometer = {
+export type Accelerometer = {
     x: IPacketBuffer & {
         acc: number;
     };
@@ -55,7 +54,7 @@ export declare type Accelerometer = {
         acc: number;
     };
 };
-export declare type Gyroscope = Array<IPacketBuffer & {
+export type Gyroscope = Array<IPacketBuffer & {
     dps: number;
     rps: number;
 }>;
@@ -85,5 +84,5 @@ export interface IInputReport0x3f {
     analogStick: IPacketBuffer;
     filter: IPacketBuffer;
 }
-export declare type InputReport = IInputReport0x3f | IInputReport0x21 | IInputReport0x30;
+export type InputReport = IInputReport0x3f | IInputReport0x21 | IInputReport0x30;
 export {};

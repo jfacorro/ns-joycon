@@ -7,4 +7,4 @@ export interface IDeviceInfo {
     macAddress: string;
     spiColorInUsed: boolean;
 }
-export declare type InputReportMode = 'standard-full-mode' | 'simple-hid-mode';
+export type InputReportMode = 'standard-full-mode' | 'simple-hid-mode';

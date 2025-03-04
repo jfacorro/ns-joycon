@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { BatteryLevel } from '../models/';
 export declare function parseInputReportID(rawData: Buffer, data: RegExpMatchArray): {
     _raw: Buffer;
