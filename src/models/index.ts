@@ -1,15 +1,15 @@
-interface IPacketBuffer {
+type PacketBuffer = {
     _raw: Buffer;
     _hex: String | String[];
 };
 
-export type BatteryLevel = 'full' | 'medium' | 'low' | 'critical' | 'empty' | 'charging';
+export type BatteryLevelValues = 'full' | 'medium' | 'low' | 'critical' | 'empty' | 'charging';
 
-interface IBatteryLevel extends IPacketBuffer {
-    level: BatteryLevel;
+type BatteryLevel = PacketBuffer & {
+    level: BatteryLevelValues;
 };
 
-interface IButtonStatus extends IPacketBuffer {
+type ButtonStatus = PacketBuffer & {
     // Byte 3 (Right Joy-Con)
     y: Boolean;
     x: Boolean;
@@ -37,40 +37,40 @@ interface IButtonStatus extends IPacketBuffer {
     chargingGrip: Boolean;
 }
 
-interface IAnalogStick extends IPacketBuffer {
+type AnalogStick = PacketBuffer & {
     horizontal: number;
     vertical: number;
 }
 
-interface IStandardInputReport {
-    inputReportID: IPacketBuffer;
-    timer: IPacketBuffer;
-    batteryLevel: IBatteryLevel;
-    connectionInfo: IPacketBuffer;
-    buttonStatus: IButtonStatus;
-    analogStickLeft: IAnalogStick;
-    analogStickRight: IAnalogStick;
-    vibrator: IPacketBuffer;
+type StandardInputReport = {
+    inputReportID: PacketBuffer;
+    timer: PacketBuffer;
+    batteryLevel: BatteryLevel;
+    connectionInfo: PacketBuffer;
+    buttonStatus: ButtonStatus;
+    analogStickLeft: AnalogStick;
+    analogStickRight: AnalogStick;
+    vibrator: PacketBuffer;
 };
 
 export type Accelerometer = {
-    x: IPacketBuffer & { acc: number };
-    y: IPacketBuffer & { acc: number };
-    z: IPacketBuffer & { acc: number };
+    x: PacketBuffer & { acc: number };
+    y: PacketBuffer & { acc: number };
+    z: PacketBuffer & { acc: number };
 };
 
-export type Gyroscope = Array<IPacketBuffer & {
+export type Gyroscope = Array<PacketBuffer & {
     dps: number;
     rps: number;
 }>;
 
-export interface IInputReport0x21 extends IStandardInputReport {
-    ack: IPacketBuffer;
-    subcommandID: IPacketBuffer;
-    subcommandReplyData: IPacketBuffer;
+export type InputReport0x21 = StandardInputReport & {
+    ack: PacketBuffer;
+    subcommandID: PacketBuffer;
+    subcommandReplyData: PacketBuffer;
 };
 
-export interface IInputReport0x30 extends IStandardInputReport {
+export type InputReport0x30 = StandardInputReport & {
     accelerometers: Accelerometer[];
     gyroscopes: Gyroscope[];
     actualAccelerometer: {
@@ -86,11 +86,11 @@ export interface IInputReport0x30 extends IStandardInputReport {
     };
 };
 
-export interface IInputReport0x3f {
-    inputReportID: IPacketBuffer;
-    buttonStatus: IPacketBuffer;
-    analogStick: IPacketBuffer;
-    filter: IPacketBuffer;
+export type InputReport0x3f = {
+    inputReportID: PacketBuffer;
+    buttonStatus: PacketBuffer;
+    analogStick: PacketBuffer;
+    filter: PacketBuffer;
 };
 
-export type InputReport = IInputReport0x3f | IInputReport0x21 | IInputReport0x30;
+export type InputReport = InputReport0x3f | InputReport0x21 | InputReport0x30;

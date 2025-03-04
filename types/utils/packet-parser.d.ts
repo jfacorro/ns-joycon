@@ -1,4 +1,4 @@
-import { BatteryLevel } from '../models/';
+import { BatteryLevelValues } from '../models/';
 export declare function parseInputReportID(rawData: Buffer, data: RegExpMatchArray): {
     _raw: Buffer;
     _hex: string[];
@@ -10,7 +10,7 @@ export declare function parseTimer(rawData: Buffer, data: RegExpMatchArray): {
 export declare function parseBatteryLevel(rawData: Buffer, data: RegExpMatchArray): {
     _raw: Buffer;
     _hex: string;
-    level: BatteryLevel;
+    level: BatteryLevelValues;
 };
 export declare function parseConnectionInfo(rawData: Buffer, data: RegExpMatchArray): {
     _raw: Buffer;

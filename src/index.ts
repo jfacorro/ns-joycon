@@ -1,6 +1,6 @@
 // Node modules.
 import { HID, Device, devices as findDevices } from 'node-hid';
-import { IInputReport0x3f, IInputReport0x21, IInputReport0x30, InputReport } from './models/';
+import { InputReport0x3f, InputReport0x21, InputReport0x30, InputReport } from './models/';
 // Local modules.
 import { IDeviceInfo } from './models/subcommand';
 import * as PacketParser from './utils/packet-parser';
@@ -147,7 +147,7 @@ class NsSwitchHID {
                         buttonStatus: PacketParser.parseButtonStatus(rawData, data),
                         analogStick: PacketParser.parseAnalogStick(rawData, data),
                         filter: PacketParser.parseFilter(rawData, data),
-                    } as IInputReport0x3f;
+                    } as InputReport0x3f;
                     break;
                 }
                 case 0x21:
@@ -169,7 +169,7 @@ class NsSwitchHID {
                             ack: PacketParser.parseAck(rawData, data),
                             subcommandID: PacketParser.parseSubcommandID(rawData, data),
                             subcommandReplyData: PacketParser.parseSubcommandReplyData(rawData, data),
-                        } as IInputReport0x21;
+                        } as InputReport0x21;
                     }
 
                     if (inputReportID === 0x30) {
@@ -187,7 +187,7 @@ class NsSwitchHID {
                                 dps: PacketParser.calculateActualGyroscope(gyroscopes.map(g => g.map(v => v.dps))),
                                 rps: PacketParser.calculateActualGyroscope(gyroscopes.map(g => g.map(v => v.rps))),
                             },
-                        } as IInputReport0x30;
+                        } as InputReport0x30;
                     }
                     break;
                 }

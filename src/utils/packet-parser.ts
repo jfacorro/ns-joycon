@@ -1,10 +1,10 @@
 // Node modules.
 import mean from 'lodash/mean';
 // Local modules.
-import { BatteryLevel } from '../models/';
+import { BatteryLevelValues } from '../models/';
 
 function calculateBatteryLevel(value: string) {
-    let level: BatteryLevel;
+    let level: BatteryLevelValues;
 
     switch (value) {
         case '8':
