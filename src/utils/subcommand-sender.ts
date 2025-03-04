@@ -71,7 +71,7 @@ export function enableIMU(hid: HID, manageHandler: Function, enable: boolean) {
         : [0x40, 0x00];
     hid.write([outputReportID, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ...subcommand]);
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         const handler = (packet: IInputReport0x21) => {
             const { inputReportID, subcommandID } = packet;
             if (inputReportID._raw[0] === 0x21 && subcommandID._raw[0] === 0x40) {
@@ -100,7 +100,7 @@ export function setInputReportMode(hid: HID, manageHandler: Function, mode: Inpu
         : [0x03, 0x3f];
     hid.write([outputReportID, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ...subcommand]);
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         const handler = (packet: IInputReport0x21) => {
             const { inputReportID, subcommandID } = packet;
             if (inputReportID._raw[0] === 0x21 && subcommandID._raw[0] === 0x03) {
@@ -131,7 +131,7 @@ export function enableVibration(hid: HID, manageHandler: Function, enable: boole
     // TODO: Make more rumble styles in future.
     hid.write([outputReportID, 0x00, 0x01, 0x40, 0x40, 0x00, 0x01, 0x40, 0x40, 0x00, ...subcommand]);
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         const handler = (packet: IInputReport0x21) => {
             const { inputReportID, subcommandID } = packet;
             if (inputReportID._raw[0] === 0x21 && subcommandID._raw[0] === 0x48) {
