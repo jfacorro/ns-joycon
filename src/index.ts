@@ -207,20 +207,15 @@ class NsSwitchHID {
 }
 
 export function findControllers(callback: (controllers: NsSwitchHID[]) => void) {
-    let deviceList = new Set();
+    var devices: NsSwitchHID[] = [];
+    var devicesIds = new Set();
+    findDevices().forEach(d => {
+        var deviceId = `${d.vendorId}:${d.productId}`;
+        if (getType(d.product) !== 'unknown' && d.vendorId === 0x057e && !devicesIds.has(deviceId)) {
+            devices.push(new NsSwitchHID(d));
+            devicesIds.add(deviceId);
+        }
+    }, [] as NsSwitchHID[]);
 
-    const work = () => {
-        const devices = findDevices().reduce((prev, d) => {
-            if (getType(d.product) !== 'unknown' && d.vendorId === 0x057e) {
-                prev.push(new NsSwitchHID(d));
-            }
-
-            return prev;
-        }, [] as NsSwitchHID[]);
-
-        callback(devices);
-    };
-
-    work();
-    setInterval(work, 1000);
+    callback(devices);
 }
