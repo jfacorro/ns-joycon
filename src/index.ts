@@ -6,18 +6,28 @@ import { IDeviceInfo } from './models/subcommand';
 import * as PacketParser from './utils/packet-parser';
 import * as SubcommandSender from './utils/subcommand-sender';
 
-function getType(product?: string) {
-    if (product === undefined) {
-        return 'unknown';
-    }
+let isNintendoDevice = (device: Device) => {
+    return device.vendorId === 0x057e;
+}
 
+let isLeftJoyCon = (device: Device) => {
+    return isNintendoDevice(device) && device.productId === 0x2006;
+};
+
+let isRightJoyCon = (device: Device) => {
+    return isNintendoDevice(device) && device.productId === 0x2007;
+};
+
+function getType(device: Device) {
+    let product = device.product ?? "";
     switch (true) {
         case /Pro Controller/i.test(product):
             return 'pro-controller';
         case /Joy-Con \([LR]\)/i.test(product):
             return 'joy-con';
-        // On windows, the product name seems to be different.
-        case /Wireless Gamepad/i.test(product):
+        // On windows, the product name shows up as "Wireless Device"
+        // so we need to check the product ID instead.
+        case isLeftJoyCon(device) || isRightJoyCon(device):
             return 'joy-con';
         default:
             return 'unknown';
@@ -40,7 +50,7 @@ class NsSwitchHID {
         this.productId = device.productId;
         this.serialNumber = device.serialNumber;
         this.product = device.product;
-        this.type = getType(device.product);
+        this.type = getType(device);
         this.path = device.path;
         this.usage = device.usage;
         this.hid = new HID(device.vendorId, device.productId);
@@ -214,7 +224,7 @@ export function findControllers(callback: (controllers: NsSwitchHID[]) => void) 
     var devicesIds = new Set();
     findDevices().forEach(d => {
         var deviceId = `${d.vendorId}:${d.productId}`;
-        if (getType(d.product) !== 'unknown' && d.vendorId === 0x057e && !devicesIds.has(deviceId)) {
+        if (getType(d) !== 'unknown' && isNintendoDevice(d) && !devicesIds.has(deviceId)) {
             devices.push(new NsSwitchHID(d));
             devicesIds.add(deviceId);
         }

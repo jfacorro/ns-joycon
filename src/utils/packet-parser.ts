@@ -335,25 +335,21 @@ export function parseGyroscopes(rawData: Buffer, data: RegExpMatchArray) {
 }
 
 export function calculateActualAccelerometer(accelerometers: number[][]) {
-    const elapsedTime = 0.005 * accelerometers.length; // Spent 5ms to collect each data.
-
     const actualAccelerometer = {
-        x: parseFloat((mean(accelerometers.map(g => g[0])) * elapsedTime).toFixed(6)),
-        y: parseFloat((mean(accelerometers.map(g => g[1])) * elapsedTime).toFixed(6)),
-        z: parseFloat((mean(accelerometers.map(g => g[2])) * elapsedTime).toFixed(6)),
+        x: parseFloat((mean(accelerometers.map(g => g[0]))).toFixed(6)),
+        y: parseFloat((mean(accelerometers.map(g => g[1]))).toFixed(6)),
+        z: parseFloat((mean(accelerometers.map(g => g[2]))).toFixed(6)),
     };
 
     return actualAccelerometer;
 }
 
 export function calculateActualGyroscope(gyroscopes: number[][]) {
-    const elapsedTime = 0.005 * gyroscopes.length; // Spent 5ms to collect each data.
-
     const actualGyroscopes = [
         mean(gyroscopes.map(g => g[0])),
         mean(gyroscopes.map(g => g[1])),
         mean(gyroscopes.map(g => g[2])),
-    ].map(v => parseFloat((v * elapsedTime).toFixed(6)));
+    ].map(v => parseFloat(v.toFixed(6)));
 
     return actualGyroscopes;
 }
