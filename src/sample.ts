@@ -20,16 +20,19 @@ JoyCon.findControllers((devices) => {
         console.log(device.meta);
 
         await device.enableIMU();
-        await device.enableVibration();
+        // await device.enableVibration();
         // Add a handler for new device.
         device.manageHandler('add', packet => {
             let packet0x30 = packet as InputReport0x30;
             let data = {
-                id: device.meta.product,
+                type: device.meta.type,
+                side: device.meta.side,
+                name: device.meta.product,
                 batteryLevel: packet0x30.batteryLevel.level,
                 gyroscope: packet0x30.actualGyroscope,
                 accelerometer: packet0x30.actualAccelerometer,
             };
+            // console.log(data);
             // console.log(device.meta.product, (packet as InputReport0x30).gyroscopes);
             const message = Buffer.from(JSON.stringify(data));
             udpClient.send(message, udpPort, udpHost);

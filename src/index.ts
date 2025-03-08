@@ -40,6 +40,7 @@ class NsSwitchHID {
     private serialNumber?: string;
     private product?: string;
     private type: 'joy-con' | 'pro-controller' | 'unknown';
+    private side?: 'left' | 'right';
     private path?: string;
     private usage?: number;
     private hid: HID;
@@ -51,6 +52,7 @@ class NsSwitchHID {
         this.serialNumber = device.serialNumber;
         this.product = device.product;
         this.type = getType(device);
+        this.side = isLeftJoyCon(device) ? 'left' : isRightJoyCon(device) ? 'right' : undefined;
         this.path = device.path;
         this.usage = device.usage;
         this.hid = new HID(device.vendorId, device.productId);
@@ -67,6 +69,7 @@ class NsSwitchHID {
             serialNumber: this.serialNumber,
             product: this.product,
             type: this.type,
+            side: this.side,
             path: this.path,
             usage: this.usage,
         };
