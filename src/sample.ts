@@ -20,6 +20,7 @@ JoyCon.findControllers((devices) => {
         console.log(device.meta);
 
         await device.enableIMU();
+        await device.enableVibration();
         // Add a handler for new device.
         device.manageHandler('add', packet => {
             let packet0x30 = packet as InputReport0x30;
