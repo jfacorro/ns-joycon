@@ -16,6 +16,9 @@ function getType(product?: string) {
             return 'pro-controller';
         case /Joy-Con \([LR]\)/i.test(product):
             return 'joy-con';
+        // On windows, the product name seems to be different.
+        case /Wireless Gamepad/i.test(product):
+            return 'joy-con';
         default:
             return 'unknown';
     }
