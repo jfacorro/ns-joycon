@@ -81,8 +81,16 @@ export type InputReport0x30 = StandardInputReport & {
         };
     };
     actualGyroscope: {
-        dps: number[];
-        rps: number[];
+        dps: {
+            x: number;
+            y: number;
+            z: number;
+        };
+        rps: {
+            x: number;
+            y: number;
+            z: number;
+        };
     };
 };
 
