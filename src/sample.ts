@@ -31,6 +31,7 @@ JoyCon.findControllers((devices) => {
                 batteryLevel: packet0x30.batteryLevel.level,
                 gyroscope: packet0x30.actualGyroscope,
                 accelerometer: packet0x30.actualAccelerometer,
+                buttons: packet0x30.buttonStatus,
             };
             // console.log(data);
             // console.log(device.meta.product, (packet as InputReport0x30).gyroscopes);
